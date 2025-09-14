@@ -43,7 +43,10 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  password      String?
   role          String    @default("user")
+  year          String?
+  branch        String?
   accounts      Account[]
   sessions      Session[]
 }
