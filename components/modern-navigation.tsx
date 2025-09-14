@@ -140,22 +140,14 @@ export function ModernNavigation() {
                 </DropdownMenu>
               </div>
             ) : (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button>Sign In</Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuItem onClick={() => signIn("google")}>
-                    Sign in with Google
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => signIn("github")}>
-                    Sign in with GitHub
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => signIn("linkedin")}>
-                    Sign in with LinkedIn
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+              <div className="flex items-center space-x-2">
+                <Button variant="ghost" size="sm" asChild>
+                  <Link href="/login">Sign In</Link>
+                </Button>
+                <Button size="sm" asChild>
+                  <Link href="/signup">Sign Up</Link>
+                </Button>
+              </div>
             )}
 
             {/* Mobile Menu */}
@@ -226,9 +218,12 @@ export function ModernNavigation() {
                     </div>
                   ) : (
                     <div className="flex flex-col space-y-2 pt-4 border-t">
-                      <Button onClick={() => signIn("google")}>Sign in with Google</Button>
-                      <Button onClick={() => signIn("github")}>Sign in with GitHub</Button>
-                      <Button onClick={() => signIn("linkedin")}>Sign in with LinkedIn</Button>
+                      <Button asChild onClick={() => setIsOpen(false)}>
+                        <Link href="/login">Sign In</Link>
+                      </Button>
+                      <Button variant="outline" asChild onClick={() => setIsOpen(false)}>
+                        <Link href="/signup">Sign Up</Link>
+                      </Button>
                     </div>
                   )}
                 </div>
