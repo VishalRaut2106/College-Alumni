@@ -140,9 +140,22 @@ export function ModernNavigation() {
                 </DropdownMenu>
               </div>
             ) : (
-              <div className="flex items-center space-x-2">
-                <Button onClick={() => signIn("google")}>Sign in with Google</Button>
-              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button>Sign In</Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem onClick={() => signIn("google")}>
+                    Sign in with Google
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => signIn("github")}>
+                    Sign in with GitHub
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => signIn("linkedin")}>
+                    Sign in with LinkedIn
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             )}
 
             {/* Mobile Menu */}
@@ -214,6 +227,8 @@ export function ModernNavigation() {
                   ) : (
                     <div className="flex flex-col space-y-2 pt-4 border-t">
                       <Button onClick={() => signIn("google")}>Sign in with Google</Button>
+                      <Button onClick={() => signIn("github")}>Sign in with GitHub</Button>
+                      <Button onClick={() => signIn("linkedin")}>Sign in with LinkedIn</Button>
                     </div>
                   )}
                 </div>
