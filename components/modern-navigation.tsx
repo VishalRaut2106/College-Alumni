@@ -26,10 +26,12 @@ import {
   Bell,
   Search,
 } from "lucide-react"
-import { useAuth } from "@/components/auth-provider"
+import { useSession, signOut } from "next-auth/react"
 
 export function ModernNavigation() {
-  const { user, signOut, isLoading } = useAuth()
+  const { data: session, status } = useSession()
+  const user = session?.user
+  const isLoading = status === "loading"
   const [isOpen, setIsOpen] = useState(false)
 
   const navigationItems = [
