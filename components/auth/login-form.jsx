@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import { signIn } from "next-auth/react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -30,8 +31,7 @@ export default function LoginForm() {
   }
 
   const handleOAuthLogin = (provider) => {
-    // TODO: Implement OAuth login
-    console.log(`Login with ${provider}`)
+    signIn(provider, { callbackUrl: "/" })
   }
 
   return (
@@ -47,11 +47,11 @@ export default function LoginForm() {
             <Mail className="w-4 h-4 mr-2" />
             Continue with Google
           </Button>
-          <Button variant="outline" className="w-full bg-transparent" onClick={() => handleOAuthLogin("linkedin")}>
+          <Button variant="outline" className="w-full bg-transparent" onClick={() => console.log("LinkedIn login not implemented")}>
             <Linkedin className="w-4 h-4 mr-2" />
             Continue with LinkedIn
           </Button>
-          <Button variant="outline" className="w-full bg-transparent" onClick={() => handleOAuthLogin("github")}>
+          <Button variant="outline" className="w-full bg-transparent" onClick={() => console.log("GitHub login not implemented")}>
             <Github className="w-4 h-4 mr-2" />
             Continue with GitHub
           </Button>
