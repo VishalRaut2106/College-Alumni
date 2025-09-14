@@ -26,10 +26,12 @@ import {
   Bell,
   Search,
 } from "lucide-react"
-import { useAuth } from "@/components/auth-provider"
+import { useSession, signIn, signOut } from "next-auth/react"
 
 export function ModernNavigation() {
-  const { user, signOut, isLoading } = useAuth()
+  const { data: session, status } = useSession()
+  const user = session?.user
+  const isLoading = status === "loading"
   const [isOpen, setIsOpen] = useState(false)
 
   const navigationItems = [
@@ -99,10 +101,10 @@ export function ModernNavigation() {
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="relative h-9 w-9 rounded-full">
                       <Avatar className="h-9 w-9">
-                        <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.name} />
+                        <AvatarImage src={user.image || "/placeholder.svg"} alt={user.name || ""} />
                         <AvatarFallback className="bg-gradient-to-br from-secondary to-secondary/80 text-white">
                           {user.name
-                            .split(" ")
+                            ?.split(" ")
                             .map((n) => n[0])
                             .join("")}
                         </AvatarFallback>
@@ -114,9 +116,6 @@ export function ModernNavigation() {
                       <div className="flex flex-col space-y-1">
                         <p className="text-sm font-medium leading-none">{user.name}</p>
                         <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
-                        <Badge variant="secondary" className="w-fit text-xs mt-1">
-                          {user.role}
-                        </Badge>
                       </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
@@ -133,7 +132,7 @@ export function ModernNavigation() {
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem onClick={handleSignOut} className="text-destructive">
+                    <DropdownMenuItem onClick={() => signOut()} className="text-destructive">
                       <LogOut className="mr-2 h-4 w-4" />
                       <span>Sign out</span>
                     </DropdownMenuItem>
@@ -142,12 +141,7 @@ export function ModernNavigation() {
               </div>
             ) : (
               <div className="flex items-center space-x-2">
-                <Button variant="ghost" size="sm" asChild>
-                  <Link href="/login">Sign In</Link>
-                </Button>
-                <Button size="sm" asChild>
-                  <Link href="/signup">Join Community</Link>
-                </Button>
+                <Button onClick={() => signIn("google")}>Sign in with Google</Button>
               </div>
             )}
 
@@ -163,19 +157,16 @@ export function ModernNavigation() {
                   {user && (
                     <div className="flex items-center space-x-3 p-4 rounded-lg bg-muted/50">
                       <Avatar className="h-10 w-10">
-                        <AvatarImage src={user.avatar || "/placeholder.svg"} alt={user.name} />
+                        <AvatarImage src={user.image || "/placeholder.svg"} alt={user.name || ""} />
                         <AvatarFallback className="bg-gradient-to-br from-secondary to-secondary/80 text-white">
                           {user.name
-                            .split(" ")
+                            ?.split(" ")
                             .map((n) => n[0])
                             .join("")}
                         </AvatarFallback>
                       </Avatar>
                       <div>
                         <p className="font-medium">{user.name}</p>
-                        <Badge variant="secondary" className="text-xs">
-                          {user.role}
-                        </Badge>
                       </div>
                     </div>
                   )}
@@ -213,7 +204,7 @@ export function ModernNavigation() {
                         <span>Settings</span>
                       </Link>
                       <button
-                        onClick={handleSignOut}
+                        onClick={() => signOut()}
                         className="flex items-center space-x-3 px-3 py-2 rounded-md text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors w-full text-left"
                       >
                         <LogOut className="h-4 w-4" />
@@ -222,12 +213,7 @@ export function ModernNavigation() {
                     </div>
                   ) : (
                     <div className="flex flex-col space-y-2 pt-4 border-t">
-                      <Button asChild onClick={() => setIsOpen(false)}>
-                        <Link href="/login">Sign In</Link>
-                      </Button>
-                      <Button variant="outline" asChild onClick={() => setIsOpen(false)}>
-                        <Link href="/signup">Join Community</Link>
-                      </Button>
+                      <Button onClick={() => signIn("google")}>Sign in with Google</Button>
                     </div>
                   )}
                 </div>
